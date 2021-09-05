@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Fant</string>
     <string name="not_logged_in">Not logged in</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign up</string>
 
 
 </resources>
