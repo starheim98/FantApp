@@ -54,8 +54,8 @@
 
     <TextView
         android:id="@+id/signUpLink"
-        android:layout_width="50dp"
-        android:layout_height="16dp"
+        android:layout_width="52dp"
+        android:layout_height="23dp"
         android:focusable="true"
         android:linksClickable="true"
         android:text="@string/sign_up"
