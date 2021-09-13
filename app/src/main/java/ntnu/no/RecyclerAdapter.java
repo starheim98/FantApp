@@ -1,5 +1,6 @@
 package ntnu.no;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+
+    //    private final String url = "http://10.22.190.200:8080/api/";
+    private final String url = "http://192.168.0.120:8080/api/";
+    private final String imageUrl = url + "fant/photo/";
+
     private ArrayList<Item> itemList;
 
     public RecyclerAdapter(ArrayList<Item> itemList){
@@ -47,9 +53,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.title.setText(itemList.get(position).getTitle());
         holder.price.setText(itemList.get(position).getPrice() + " kr");
         holder.description.setText(itemList.get(position).getDescription());
-//        Picasso.get()
-//                .load(itemList.get(position).getPhotos())
-//                .into(holder.image);
+        if(itemList.get(position).getPhotos().size() > 0){
+            String subPath = itemList.get(position).getPhotos().get(0).getSubPath();
+            Picasso.get()
+                    .load(imageUrl + subPath)
+                    .fit()
+                    .centerCrop()
+                    .into(holder.image);
+        }
     }
 
     @Override

@@ -3,13 +3,13 @@ package ntnu.no;
 import java.util.List;
 
 public class Item {
-    private String imgUrl;
+    private List<Photo> photos;
     private String title;
     private String price;
     private String description;
 
-    public Item(String imgUrl, String title, String price, String description) {
-        this.imgUrl = imgUrl;
+    public Item(List<Photo> photos, String title, String price, String description) {
+        this.photos = photos;
         this.title = title;
         this.price = price;
         this.description = description;
@@ -21,12 +21,16 @@ public class Item {
         this.description = description;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public List<Photo> getPhotos() {
+        return photos;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
+
+    public void addPhoto(Photo photo){
+        this.photos.add(photo);
     }
 
     public String getTitle() {

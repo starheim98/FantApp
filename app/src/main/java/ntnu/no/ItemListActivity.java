@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,34 +29,44 @@ import org.json.JSONObject;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.stream.Stream;
 
-public class ItemListActivity extends AppCompatActivity {
+public class ItemListActivity extends AppCompatActivity implements Observer {
     private ArrayList<Item> itemList;
     private RecyclerView recyclerView;
+    private TextView username;
 
-    private final String url = "http://10.22.190.200:8080/api/";
+//    private final String url = "http://10.22.190.200:8080/api/";
+    private final String url = "http://192.168.0.120:8080/api/";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        User.getInstance().observe(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
 
         recyclerView = findViewById(R.id.recyclerView);
         itemList = new ArrayList<>();
 
         setItems();
-        setAdapter();
 
-        TextView toolbarText = findViewById(R.id.toolBarText);
-        toolbarText.setOnClickListener(new View.OnClickListener() {
+        username = findViewById(R.id.toolBarText);
+        username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loginPage();
             }
         });
     }
+
+    @Override
+    public void updateUser(){
+        username.setText(User.getInstance().getUsername());
+    }
+
 
     private void setItems() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -70,16 +81,18 @@ public class ItemListActivity extends AppCompatActivity {
                             JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++){
                                 JSONObject jsonObject = (JSONObject)jsonArray.get(i);
+                                List<Photo> photoList = new ArrayList<>();
+                                JSONArray photos = jsonObject.getJSONArray("photos");
+                                for (int j = 0; j < photos.length(); j++){
+                                    Photo photo = new Photo(photos.getJSONObject(j).getString("subpath"));
+                                    photoList.add(photo);
+                                }
 
-                                JSONArray photo = jsonObject.getJSONArray("photos");
-                                String subpath = photo.getJSONObject(0).getString("subpath");
-
-                                String imgUrl = url + "photo/" + subpath;
                                 String title = jsonObject.getString("title");
                                 int price = jsonObject.getInt("price");
                                 String description = jsonObject.getString("description");
 
-                                itemList.add(new Item(imgUrl, title, Integer.toString(price), description));
+                                itemList.add(new Item(photoList, title, Integer.toString(price), description));
                             }
                         } catch (JSONException e){
                             System.out.println(e);
@@ -92,18 +105,7 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(request);
-
-
-
-//        itemList.add(new Item("https://i.picsum.photos/id/18/100/100.jpg?hmac=OedHV-WC1S7y_AKkQXqUTjOTdwumY5dWeO53bO0ox2o",
-//                "Item1", "100", "desc1desc1desc1desc1desc1desc1"));
-//        itemList.add(new Item("https://i.picsum.photos/id/896/100/100.jpg?hmac=_jToGRL7iP8B-HahUeCVhU9FEqOfjbVBNFX_09VnTFM",
-//                "Item2", "200", "desc2desc2desc2desc2desc2desc2"));
-//        itemList.add(new Item("https://i.picsum.photos/id/147/100/100.jpg?hmac=ZKzrDm4MliOp9keOjaqpf9qNdBrrTTu-_C5mfgA6uMk",
-//                "Item3", "300", "desc3desc3desc3desc3desc3desc3"));
-//        itemList.add(new Item("https://i.picsum.photos/id/189/100/100.jpg?hmac=A0WAuH9vU1cWAapStacGxD5ED_MgpcMXNfpCMAXFG9U",
-//                "Item4", "400", "desc4desc4desc3desc4desc4desc4"));
-
+        setAdapter();
     }
 
     private void setAdapter(){
@@ -119,5 +121,10 @@ public class ItemListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setItems();
+    }
 
 }

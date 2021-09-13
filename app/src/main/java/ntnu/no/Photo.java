@@ -1,7 +1,7 @@
 package ntnu.no;
 
 public class Photo {
-    String subPath;
+    private String subPath;
 
     public Photo(String subPath) {
         this.subPath = subPath;

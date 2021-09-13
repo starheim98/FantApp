@@ -18,7 +18,9 @@ import com.android.volley.toolbox.Volley;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final String url = "http://10.22.190.200:8080/api/";
+//    private final String url = "http://10.22.190.200:8080/api/";
+    private final String url = "http://192.168.0.120:8080/api/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         System.out.println("LOGIN SUCCESS + " + response);
-                        TextView toolbarUsername = findViewById(R.id.toolBarText);
+                        User user = User.getInstance();
+                        user.setUsername(username);
+                        user.setToken(response);
                         itemPageSwitch();
-                        toolbarUsername.setText(username);
+                        finish();
                     }
                 }, new Response.ErrorListener() {
             @Override

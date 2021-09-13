@@ -1,14 +1,36 @@
 package ntnu.no;
 
+import java.util.ArrayList;
+
 public class User {
     private String token;
     private String username;
-    private String password;
 
-    public User(String token, String username, String password) {
+    public User(String token, String username) {
         this.token = token;
         this.username = username;
-        this.password = password;
+    }
+
+    public User(){}
+
+    public static User user = null;
+    private ArrayList<Observer> observers = new ArrayList<>();
+
+    public static User getInstance(){
+        if (user == null){
+            user = new User();
+        }
+        return user;
+    }
+
+    private void notifyObservers(){
+        for (Observer observer : observers){
+            observer.updateUser();
+        }
+    }
+
+    public void observe(Observer observer){
+        observers.add(observer);
     }
 
     public String getToken() {
@@ -17,6 +39,7 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+        notifyObservers();
     }
 
     public String getUsername() {
@@ -25,13 +48,7 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        notifyObservers();
     }
 }
+
