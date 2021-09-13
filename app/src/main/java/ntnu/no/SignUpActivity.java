@@ -49,11 +49,14 @@ public class SignUpActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("success?");
+                        System.out.println("Signed up successfully");
+                        System.out.println(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                System.out.println("Sign up failed");
+                System.out.println(error);
                 error.getMessage();
             }
         }){

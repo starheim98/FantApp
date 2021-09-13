@@ -1,15 +1,15 @@
 package ntnu.no;
 
-import android.media.Image;
+import java.util.List;
 
 public class Item {
-    private Image image;
+    private String imgUrl;
     private String title;
     private String price;
     private String description;
 
-    public Item(Image image, String title, String price, String description) {
-        this.image = image;
+    public Item(String imgUrl, String title, String price, String description) {
+        this.imgUrl = imgUrl;
         this.title = title;
         this.price = price;
         this.description = description;
@@ -21,12 +21,12 @@ public class Item {
         this.description = description;
     }
 
-    public Image getImage() {
-        return image;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getTitle() {
