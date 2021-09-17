@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class User {
     private String token;
     private String username;
+    private boolean loggedIn = false;
 
     public User(String token, String username) {
         this.token = token;
@@ -49,6 +50,14 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
         notifyObservers();
+    }
+
+    public void setLoggedIn(Boolean isLoggedIn){
+        this.loggedIn = isLoggedIn;
+    }
+
+    public Boolean isLoggedIn(){
+        return this.loggedIn;
     }
 }
 

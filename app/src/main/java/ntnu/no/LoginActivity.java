@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signUpSwitch();
+                finish();
             }
         });
 
@@ -66,21 +67,15 @@ public class LoginActivity extends AppCompatActivity {
                         User user = User.getInstance();
                         user.setUsername(username);
                         user.setToken(response);
-                        itemPageSwitch();
                         finish();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("Login failed");
+                System.out.println(error.toString());
             }
         });
         requestQueue.add(request);
-    }
-
-    // switch to item page
-    private void itemPageSwitch() {
-        Intent intent = new Intent(this, ItemListActivity.class);
-        startActivity(intent);
     }
 }

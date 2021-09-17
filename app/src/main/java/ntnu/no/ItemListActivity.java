@@ -51,8 +51,6 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
         recyclerView = findViewById(R.id.recyclerView);
         itemList = new ArrayList<>();
 
-        setItems();
-
         username = findViewById(R.id.toolBarText);
         username.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +58,8 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
                 loginPage();
             }
         });
+        setItems();
+        setAdapter();
     }
 
     @Override
@@ -69,6 +69,7 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
 
 
     private void setItems() {
+        itemList.clear();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest request = new StringRequest(Request.Method.GET,
@@ -105,12 +106,12 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
             }
         });
         requestQueue.add(request);
-        setAdapter();
     }
 
     private void setAdapter(){
         RecyclerAdapter adapter = new RecyclerAdapter(itemList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
@@ -125,6 +126,12 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
     public void onResume() {
         super.onResume();
         setItems();
+
+        if(User.getInstance().isLoggedIn()){
+            username.setText(User.getInstance().getUsername());
+        } else {
+            username.setText("Login");
+        }
     }
 
 }

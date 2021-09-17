@@ -52,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         System.out.println("Signed up successfully");
                         System.out.println(response);
+                        login(username, password);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -75,6 +76,30 @@ public class SignUpActivity extends AppCompatActivity {
                 return params;
             }
         };
+        requestQueue.add(request);
+    }
+
+    private void login(String username, String password) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest request = new StringRequest(Request.Method.GET,
+                url + "auth/login?uid=" + username + "&pwd=" + password,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("LOGIN SUCCESS + " + response);
+                        User user = User.getInstance();
+                        user.setUsername(username);
+                        user.setToken(response);
+                        finish();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Login failed");
+                System.out.println(error.toString());
+            }
+        });
         requestQueue.add(request);
     }
 }
