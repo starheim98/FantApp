@@ -2,12 +2,15 @@ package ntnu.no;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -45,6 +48,10 @@ public class LoginActivity extends AppCompatActivity {
                 TextView username = findViewById(R.id.username);
                 TextView password = findViewById(R.id.password);
                 login(username.getText().toString(), password.getText().toString());
+
+                // close annoying keyboard
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
     }
@@ -67,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                         User user = User.getInstance();
                         user.setUsername(username);
                         user.setToken(response);
+                        user.setLoggedIn(true);
                         finish();
                     }
                 }, new Response.ErrorListener() {
@@ -74,8 +82,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 System.out.println("Login failed");
                 System.out.println(error.toString());
+                displayLoginError(error.toString());
             }
         });
         requestQueue.add(request);
     }
+
+    private void displayLoginError(String error){
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+    }
+
+
 }

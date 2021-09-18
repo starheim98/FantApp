@@ -58,7 +58,8 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
                 loginPage();
             }
         });
-        setItems();
+//        username.bringToFront();
+//        setItems();
         setAdapter();
     }
 
@@ -71,6 +72,7 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
     private void setItems() {
         itemList.clear();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+        System.out.println("test2");
 
         StringRequest request = new StringRequest(Request.Method.GET,
                 url + "fant",
@@ -94,6 +96,7 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
                                 String description = jsonObject.getString("description");
 
                                 itemList.add(new Item(photoList, title, Integer.toString(price), description));
+                                recyclerView.getAdapter().notifyDataSetChanged();
                             }
                         } catch (JSONException e){
                             System.out.println(e);
@@ -106,6 +109,7 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
             }
         });
         requestQueue.add(request);
+        System.out.println(itemList.size());
     }
 
     private void setAdapter(){
@@ -126,9 +130,11 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
     public void onResume() {
         super.onResume();
         setItems();
-
+        System.out.println("test");
+        System.out.println(User.getInstance().isLoggedIn());
         if(User.getInstance().isLoggedIn()){
             username.setText(User.getInstance().getUsername());
+            System.out.println("test 3");
         } else {
             username.setText("Login");
         }

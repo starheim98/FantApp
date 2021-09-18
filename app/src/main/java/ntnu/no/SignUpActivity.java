@@ -2,11 +2,14 @@ package ntnu.no;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -39,6 +42,10 @@ public class SignUpActivity extends AppCompatActivity {
                     TextView username = findViewById(R.id.usernameSingUp);
                     TextView password = findViewById(R.id.passwordSignUp);
                     signUp(username.getText().toString(), password.getText().toString());
+
+                    // close annoying keyboard
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
             });
         }
@@ -57,8 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Sign up failed");
-                System.out.println(error);
+                displaySignUpError(error.toString());
                 error.getMessage();
             }
         }){
@@ -91,6 +97,7 @@ public class SignUpActivity extends AppCompatActivity {
                         User user = User.getInstance();
                         user.setUsername(username);
                         user.setToken(response);
+                        user.setLoggedIn(true);
                         finish();
                     }
                 }, new Response.ErrorListener() {
@@ -101,5 +108,9 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(request);
+    }
+
+    private void displaySignUpError(String error){
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
     }
 }
