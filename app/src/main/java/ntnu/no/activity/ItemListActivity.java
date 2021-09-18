@@ -1,4 +1,4 @@
-package ntnu.no;
+package ntnu.no.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -6,9 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -20,17 +17,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
-import java.util.stream.Stream;
+
+import ntnu.no.R;
+import ntnu.no.RecyclerAdapter;
+import ntnu.no.model.Item;
+import ntnu.no.model.Observer;
+import ntnu.no.model.Photo;
+import ntnu.no.model.User;
 
 public class ItemListActivity extends AppCompatActivity implements Observer {
     private ArrayList<Item> itemList;

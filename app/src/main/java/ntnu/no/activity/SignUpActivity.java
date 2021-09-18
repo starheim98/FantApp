@@ -1,4 +1,4 @@
-package ntnu.no;
+package ntnu.no.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +21,9 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import ntnu.no.R;
+import ntnu.no.model.User;
 
 public class SignUpActivity extends AppCompatActivity {
 

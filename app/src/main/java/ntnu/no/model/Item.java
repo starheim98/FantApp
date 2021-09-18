@@ -1,4 +1,4 @@
-package ntnu.no;
+package ntnu.no.model;
 
 import java.util.List;
 
