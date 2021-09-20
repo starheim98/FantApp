@@ -25,7 +25,7 @@ import ntnu.no.model.User;
 public class LoginActivity extends AppCompatActivity {
 
 //    private final String url = "http://10.22.190.200:8080/api/";
-    private final String url = "http://192.168.0.120:8080/api/";
+    private final String url = "http://10.0.2.2:8080/api/";
 
 
     @Override
