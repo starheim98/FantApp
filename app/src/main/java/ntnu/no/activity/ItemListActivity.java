@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ import ntnu.no.model.Observer;
 import ntnu.no.model.Photo;
 import ntnu.no.model.User;
 
-public class ItemListActivity extends AppCompatActivity implements Observer {
+public class ItemListActivity extends AppCompatActivity implements Observer, RecyclerAdapter.OnItemClickListener{
     private ArrayList<Item> itemList;
     private RecyclerView recyclerView;
     private TextView username;
@@ -47,9 +48,10 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+        itemList = new ArrayList<>();
 
         recyclerView = findViewById(R.id.recyclerView);
-        itemList = new ArrayList<>();
+
 
         username = findViewById(R.id.toolBarText);
         username.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +115,7 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
     }
 
     private void setAdapter(){
-        RecyclerAdapter adapter = new RecyclerAdapter(itemList);
+        RecyclerAdapter adapter = new RecyclerAdapter(itemList, this);
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -140,4 +142,11 @@ public class ItemListActivity extends AppCompatActivity implements Observer {
         }
     }
 
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this, ItemDetailActivity.class);
+        intent.putExtra("Selected Item", itemList.get(position));
+        startActivity(intent);
+    }
 }

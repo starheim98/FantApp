@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.ItemDetailActivity">
 
-    <ImageView
-        android:id="@+id/itemDetailImage"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        app:layout_constraintEnd_toStartOf="@+id/nextImgBtn"
-        app:layout_constraintStart_toEndOf="@+id/prevImgBtn"
-        app:layout_constraintTop_toBottomOf="@+id/itemDetailTitle"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <Button
         android:id="@+id/prevImgBtn"
         android:layout_width="57dp"
@@ -57,10 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="24dp"
         android:text="Price"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemDetailImage" />
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
     <TextView
         android:id="@+id/itemDetailDesc"
@@ -80,4 +70,12 @@
         android:text=" return to markedplace"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="275dp"
+        android:layout_height="275dp"
+        app:layout_constraintEnd_toStartOf="@+id/nextImgBtn"
+        app:layout_constraintStart_toEndOf="@+id/prevImgBtn"
+        app:layout_constraintTop_toBottomOf="@+id/itemDetailTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

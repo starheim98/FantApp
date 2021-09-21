@@ -3,16 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_item_detail.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_item_detail.xml" value="0.33" />
+        <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_item_list.xml" value="0.14" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_sign_up.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/item.xml" value="0.286231884057971" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/item_detail_image.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/item_detail_img.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/toolbar.xml" value="0.286231884057971" />
       </map>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.36666666666666664" />
+      </ProjectState>
+    </option>
   </component>
 </project>

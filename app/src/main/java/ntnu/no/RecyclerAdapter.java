@@ -22,23 +22,35 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private final String imageUrl = url + "fant/photo/";
 
     private ArrayList<Item> itemList;
+    private OnItemClickListener onItemClickListener;
 
-    public RecyclerAdapter(ArrayList<Item> itemList){
+
+    public RecyclerAdapter(ArrayList<Item> itemList, OnItemClickListener onItemClickListener){
         this.itemList = itemList;
+        this.onItemClickListener = onItemClickListener;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView image;
-        private TextView title;
-        private TextView price;
-        private TextView description;
+        private TextView title, price, description;
 
-        public MyViewHolder(final View view){
+        OnItemClickListener onItemClickListener;
+
+        public MyViewHolder(final View view, OnItemClickListener onItemClickListener){
             super(view);
             image = view.findViewById(R.id.itemImage);
             title = view.findViewById(R.id.itemTitle);
             price = view.findViewById(R.id.itemPrice);
             description = view.findViewById(R.id.itemDesc);
+            this.onItemClickListener = onItemClickListener;
+
+            view.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            onItemClickListener.onItemClick(getAdapterPosition());
         }
     }
 
@@ -46,7 +58,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public RecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        return new MyViewHolder(itemView);
+        return new MyViewHolder(itemView, onItemClickListener);
     }
 
     @Override
@@ -67,5 +79,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public int getItemCount() {
         return itemList.size();
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
     }
 }
