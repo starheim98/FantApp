@@ -3,7 +3,9 @@ package ntnu.no;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +21,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
 
     //    private final String url = "http://10.22.190.200:8080/api/";
-    private final String url = "http://192.168.0.120:8080/api/";
+    private final String url = "http://10.0.2.2:8080/api/";
     private final String imageUrl = url + "fant/photo/";
 
     private ArrayList<Photo> photos;
@@ -31,7 +33,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     @NonNull
     @Override
     public ViewPagerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_item_detail, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_img, parent, false);
         return new ViewPagerViewHolder(view);
     }
 
@@ -41,6 +43,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
             Photo currentImage = photos.get(position);
             String subPath = currentImage.getSubPath();
 
+            System.out.println(imageUrl + subPath);
             Picasso.get()
                     .load(imageUrl + subPath)
                     .fit()
@@ -56,11 +59,13 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     }
 
     public class ViewPagerViewHolder extends RecyclerView.ViewHolder {
-        private ImageView image;
+        ImageView image;
 
         public ViewPagerViewHolder(final View view){
             super(view);
             image = view.findViewById(R.id.itemDetailImg);
+            System.out.println(image);
+
         }
     }
 

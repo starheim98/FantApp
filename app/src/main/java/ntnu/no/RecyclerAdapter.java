@@ -45,6 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             this.onItemClickListener = onItemClickListener;
 
             view.setOnClickListener(this);
+            System.out.println("IMAGE: " + image);
         }
 
 

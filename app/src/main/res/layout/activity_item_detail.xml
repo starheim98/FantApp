@@ -7,22 +7,6 @@
     tools:context=".activity.ItemDetailActivity">
 
     <Button
-        android:id="@+id/prevImgBtn"
-        android:layout_width="57dp"
-        android:layout_height="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/itemDetailPrice"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <Button
-        android:id="@+id/nextImgBtn"
-        android:layout_width="57dp"
-        android:layout_height="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/itemDetailPrice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <Button
         android:id="@+id/buyBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,18 +21,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
-        android:text="Title"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/returnBtn" />
 
     <TextView
         android:id="@+id/itemDetailPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
-        android:text="Price"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
@@ -58,12 +41,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
         android:layout_marginTop="15dp"
-        android:text="Desc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemDetailPrice" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/returnBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -73,9 +55,10 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="275dp"
-        android:layout_height="275dp"
-        app:layout_constraintEnd_toStartOf="@+id/nextImgBtn"
-        app:layout_constraintStart_toEndOf="@+id/prevImgBtn"
+        android:layout_width="290dp"
+        android:layout_height="291dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemDetailTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
