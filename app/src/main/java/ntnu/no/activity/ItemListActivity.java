@@ -70,7 +70,20 @@ public class ItemListActivity extends AppCompatActivity implements Observer, Rec
             }
         });
 
+        Button addItemBtn = findViewById(R.id.addItemBtn);
+        addItemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addItemPage();
+            }
+        });
+
         setAdapter();
+    }
+
+    private void addItemPage() {
+        Intent intent = new Intent(this, AddItemActivity.class);
+        startActivity(intent);
     }
 
     @Override

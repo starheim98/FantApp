@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_add_item.xml" value="0.33" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_item_detail.xml" value="0.33" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_item_list.xml" value="0.25" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/activity_sign_up.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/add_item_image.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/item.xml" value="0.286231884057971" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/item_detail_image.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Andre/Documents/Dev/School/MobileApp/FantApp/app/src/main/res/layout/item_detail_img.xml" value="0.36666666666666664" />

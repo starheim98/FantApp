@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.AddItemActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.ItemDetailActivity"
             android:exported="true" />
         <activity
