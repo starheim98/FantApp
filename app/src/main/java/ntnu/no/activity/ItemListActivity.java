@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -60,8 +61,15 @@ public class ItemListActivity extends AppCompatActivity implements Observer, Rec
                 loginPage();
             }
         });
-//        username.bringToFront();
-//        setItems();
+
+        Button logoutBtn = findViewById(R.id.signOutBtn);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onLogout();
+            }
+        });
+
         setAdapter();
     }
 
@@ -128,17 +136,35 @@ public class ItemListActivity extends AppCompatActivity implements Observer, Rec
         startActivity(intent);
     }
 
+    private void onLogout(){
+        User.getInstance().setLoggedIn(false);
+        findViewById(R.id.addItemBtn).setVisibility(View.INVISIBLE);
+        findViewById(R.id.signOutBtn).setVisibility(View.INVISIBLE);
+        username.setText("Login");
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginPage();
+            }
+        });
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         setItems();
-        System.out.println("test");
         System.out.println(User.getInstance().isLoggedIn());
         if(User.getInstance().isLoggedIn()){
             username.setText(User.getInstance().getUsername());
-            System.out.println("test 3");
+            findViewById(R.id.addItemBtn).setVisibility(View.VISIBLE);
+            findViewById(R.id.signOutBtn).setVisibility(View.VISIBLE);
+            username.setOnClickListener(null);
+            System.out.println("logged in");
         } else {
             username.setText("Login");
+            System.out.println("logged out");
+
         }
     }
 
