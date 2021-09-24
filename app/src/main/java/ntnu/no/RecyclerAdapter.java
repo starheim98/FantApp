@@ -82,6 +82,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return itemList.size();
     }
 
+    public void filteredList(ArrayList<Item> filteredList){
+        this.itemList = filteredList;
+        notifyDataSetChanged();
+    }
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }

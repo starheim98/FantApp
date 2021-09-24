@@ -6,6 +6,8 @@ import androidx.core.content.FileProvider;
 import ntnu.no.R;
 import ntnu.no.model.User;
 import ntnu.no.model.UserObserver;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,17 +16,15 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 public class AddItemActivity extends AppCompatActivity implements UserObserver {
 
@@ -53,8 +53,20 @@ public class AddItemActivity extends AppCompatActivity implements UserObserver {
         imageContainer = findViewById(R.id.imageContainer);
 
         findViewById(R.id.addImageBtn).setOnClickListener(view -> onCameraClick());
-
+        findViewById(R.id.addItemBtn).setOnClickListener(view -> addItem());
         findViewById(R.id.cancelBtn).setOnClickListener(view -> finish());
+    }
+
+    private void addItem() {
+
+
+        String title = findViewById(R.id.addItemTitle).toString();
+        String price = findViewById(R.id.addItemPrice).toString();
+        String desc = findViewById(R.id.addItemDesc).toString();
+
+
+
+
     }
 
     private void logout() {

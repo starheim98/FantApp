@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
-import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ntnu.no.R;
 import ntnu.no.RecyclerAdapter;
@@ -41,6 +42,8 @@ public class ItemListActivity extends AppCompatActivity implements UserObserver,
 //    private final String url = "http://10.22.190.200:8080/api/";
     private final String url = "http://10.0.2.2:8080/api/";
 
+    RecyclerAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,34 @@ public class ItemListActivity extends AppCompatActivity implements UserObserver,
         username.setOnClickListener(view -> {loginPage();});
         findViewById(R.id.toolBarText).setOnClickListener(view -> {loginPage();});
         findViewById(R.id.signOutBtn).setOnClickListener(view -> {onLogout();});
-        findViewById(R.id.addItemBtn).setOnClickListener(view -> {addItemPage();});
+        findViewById(R.id.addItemPageBtn).setOnClickListener(view -> {addItemPage();});
+
+        SearchView searchView = findViewById(R.id.searchBar);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filter(s.toString());
+                return false;
+            }
+        });
 
         setAdapter();
+    }
+
+    private void filter(String query) {
+        System.out.println(query);
+        ArrayList<Item> foundItems = new ArrayList<>();
+        for (Item item : itemList){
+            if (item.getTitle().toLowerCase().contains(query.toLowerCase())){
+                foundItems.add(item);
+            }
+        }
+        adapter.filteredList(foundItems);
     }
 
     private void addItemPage() {
@@ -115,11 +143,10 @@ public class ItemListActivity extends AppCompatActivity implements UserObserver,
             }
         });
         requestQueue.add(request);
-        System.out.println(itemList.size());
     }
 
     private void setAdapter(){
-        RecyclerAdapter adapter = new RecyclerAdapter(itemList, this);
+        adapter = new RecyclerAdapter(itemList, this);
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -134,7 +161,7 @@ public class ItemListActivity extends AppCompatActivity implements UserObserver,
 
     private void onLogout(){
         User.getInstance().clearAll();
-        findViewById(R.id.addItemBtn).setVisibility(View.INVISIBLE);
+        findViewById(R.id.addItemPageBtn).setVisibility(View.INVISIBLE);
         findViewById(R.id.signOutBtn).setVisibility(View.INVISIBLE);
         username.setText("Login");
         username.setOnClickListener(new View.OnClickListener() {
@@ -152,14 +179,14 @@ public class ItemListActivity extends AppCompatActivity implements UserObserver,
         setItems();
         if(User.getInstance().isLoggedIn()){
             username.setText(User.getInstance().getUsername());
-            findViewById(R.id.addItemBtn).setVisibility(View.VISIBLE);
+            findViewById(R.id.addItemPageBtn).setVisibility(View.VISIBLE);
             findViewById(R.id.signOutBtn).setVisibility(View.VISIBLE);
             username.setOnClickListener(null);
             System.out.println("logged in");
         } else {
             username.setText("Login");
             findViewById(R.id.signOutBtn).setVisibility(View.INVISIBLE);
-            findViewById(R.id.addItemBtn).setVisibility(View.INVISIBLE);
+            findViewById(R.id.addItemPageBtn).setVisibility(View.INVISIBLE);
             System.out.println("logged out");
             findViewById(R.id.toolBarText).setOnClickListener(view -> loginPage());
 
