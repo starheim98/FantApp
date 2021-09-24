@@ -1,6 +1,7 @@
 package ntnu.no.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private String token;
@@ -15,7 +16,7 @@ public class User {
     public User(){}
 
     public static User user = null;
-    private ArrayList<Observer> observers = new ArrayList<>();
+    private List<UserObserver> userObservers = new ArrayList<>();
 
     public static User getInstance(){
         if (user == null){
@@ -25,13 +26,13 @@ public class User {
     }
 
     private void notifyObservers(){
-        for (Observer observer : observers){
-            observer.updateUser();
+        for (UserObserver userObserver : userObservers){
+            userObserver.updateUser();
         }
     }
 
-    public void observe(Observer observer){
-        observers.add(observer);
+    public void observe(UserObserver userObserver){
+        userObservers.add(userObserver);
     }
 
     public String getToken() {
@@ -52,6 +53,13 @@ public class User {
         notifyObservers();
     }
 
+    public void clearAll(){
+        User user = User.getInstance();
+        user.setLoggedIn(false);
+        user.setUsername(null);
+        user.setToken(null);
+    }
+
     public void setLoggedIn(Boolean isLoggedIn){
         this.loggedIn = isLoggedIn;
     }
@@ -59,5 +67,6 @@ public class User {
     public Boolean isLoggedIn(){
         return this.loggedIn;
     }
+
 }
 

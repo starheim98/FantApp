@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,11 +29,11 @@ import java.util.List;
 import ntnu.no.R;
 import ntnu.no.RecyclerAdapter;
 import ntnu.no.model.Item;
-import ntnu.no.model.Observer;
+import ntnu.no.model.UserObserver;
 import ntnu.no.model.Photo;
 import ntnu.no.model.User;
 
-public class ItemListActivity extends AppCompatActivity implements Observer, RecyclerAdapter.OnItemClickListener{
+public class ItemListActivity extends AppCompatActivity implements UserObserver, RecyclerAdapter.OnItemClickListener{
     private ArrayList<Item> itemList;
     private RecyclerView recyclerView;
     private TextView username;
@@ -49,34 +48,15 @@ public class ItemListActivity extends AppCompatActivity implements Observer, Rec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+
         itemList = new ArrayList<>();
-
         recyclerView = findViewById(R.id.recyclerView);
-
-
         username = findViewById(R.id.toolBarText);
-        username.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginPage();
-            }
-        });
 
-        Button logoutBtn = findViewById(R.id.signOutBtn);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onLogout();
-            }
-        });
-
-        Button addItemBtn = findViewById(R.id.addItemBtn);
-        addItemBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addItemPage();
-            }
-        });
+        username.setOnClickListener(view -> {loginPage();});
+        findViewById(R.id.toolBarText).setOnClickListener(view -> {loginPage();});
+        findViewById(R.id.signOutBtn).setOnClickListener(view -> {onLogout();});
+        findViewById(R.id.addItemBtn).setOnClickListener(view -> {addItemPage();});
 
         setAdapter();
     }
@@ -88,7 +68,10 @@ public class ItemListActivity extends AppCompatActivity implements Observer, Rec
 
     @Override
     public void updateUser(){
-        username.setText(User.getInstance().getUsername());
+        User user = User.getInstance();
+        if(user.isLoggedIn()){
+            username.setText(User.getInstance().getUsername());
+        }
     }
 
 
@@ -150,7 +133,7 @@ public class ItemListActivity extends AppCompatActivity implements Observer, Rec
     }
 
     private void onLogout(){
-        User.getInstance().setLoggedIn(false);
+        User.getInstance().clearAll();
         findViewById(R.id.addItemBtn).setVisibility(View.INVISIBLE);
         findViewById(R.id.signOutBtn).setVisibility(View.INVISIBLE);
         username.setText("Login");
@@ -167,7 +150,6 @@ public class ItemListActivity extends AppCompatActivity implements Observer, Rec
     public void onResume() {
         super.onResume();
         setItems();
-        System.out.println(User.getInstance().isLoggedIn());
         if(User.getInstance().isLoggedIn()){
             username.setText(User.getInstance().getUsername());
             findViewById(R.id.addItemBtn).setVisibility(View.VISIBLE);
@@ -176,7 +158,10 @@ public class ItemListActivity extends AppCompatActivity implements Observer, Rec
             System.out.println("logged in");
         } else {
             username.setText("Login");
+            findViewById(R.id.signOutBtn).setVisibility(View.INVISIBLE);
+            findViewById(R.id.addItemBtn).setVisibility(View.INVISIBLE);
             System.out.println("logged out");
+            findViewById(R.id.toolBarText).setOnClickListener(view -> loginPage());
 
         }
     }
