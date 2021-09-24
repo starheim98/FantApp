@@ -124,12 +124,12 @@ public class ItemListActivity extends AppCompatActivity implements UserObserver,
                                     Photo photo = new Photo(photos.getJSONObject(j).getString("subpath"));
                                     photoList.add(photo);
                                 }
-
+                                int id = jsonObject.getInt("id");
                                 String title = jsonObject.getString("title");
                                 int price = jsonObject.getInt("price");
                                 String description = jsonObject.getString("description");
 
-                                itemList.add(new Item(photoList, title, Integer.toString(price), description));
+                                itemList.add(new Item(Integer.toString(id), photoList, title, Integer.toString(price), description));
                                 recyclerView.getAdapter().notifyDataSetChanged();
                             }
                         } catch (JSONException e){

@@ -6,12 +6,14 @@ import android.os.Parcelable;
 import java.util.List;
 
 public class Item implements Parcelable {
+    private String id;
     private List<Photo> photos;
     private String title;
     private String price;
     private String description;
 
-    public Item(List<Photo> photos, String title, String price, String description) {
+    public Item(String id, List<Photo> photos, String title, String price, String description) {
+        this.id = id;
         this.photos = photos;
         this.title = title;
         this.price = price;
@@ -25,6 +27,7 @@ public class Item implements Parcelable {
     }
 
     protected Item(Parcel in) {
+        id = in.readString();
         photos = in.createTypedArrayList(Photo.CREATOR);
         title = in.readString();
         price = in.readString();
@@ -79,6 +82,12 @@ public class Item implements Parcelable {
         this.description = description;
     }
 
+    public String getId() {
+        return id;
+    }
+
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -86,6 +95,7 @@ public class Item implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
         parcel.writeTypedList(photos);
         parcel.writeString(title);
         parcel.writeString(price);
