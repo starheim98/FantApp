@@ -9,7 +9,11 @@ import ntnu.no.model.User;
 import ntnu.no.model.UserObserver;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.http.Multipart;
 
 import android.Manifest;
 import android.content.ContentValues;
@@ -34,11 +38,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.http.entity.ContentType;
+
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -127,8 +134,36 @@ public class AddItemActivity extends AppCompatActivity implements UserObserver {
         String price = findViewById(R.id.addItemPrice).toString();
         String desc = findViewById(R.id.addItemDesc).toString();
 
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+        builder.addFormDataPart("title", title);
+        builder.addFormDataPart("price", price);
+        builder.addFormDataPart("description", desc);
 
-        OkHttpClient httpClient = new OkHttpClient();
+        if(photoFiles.size() > 0){
+            for (File file : photoFiles){
+
+            }
+        }
+
+        MultipartBody multipartBody = builder.build();
+        System.out.println("Multipartbody: " + multipartBody);
+
+        Request request = new Request.Builder()
+                .header("Authorization", "Bearer " + User.getInstance().getToken())
+                .url("http://10.0.2.2:8080/api/fant/create/")
+                .post(multipartBody)
+                .build();
+
+        System.out.println("Request: " + request);
+        OkHttpClient client = new OkHttpClient.Builder().build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            System.out.println(response);
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     private void logout() {
@@ -174,11 +209,9 @@ public class AddItemActivity extends AppCompatActivity implements UserObserver {
         }
     }
 
-
     // TODO: useless?
     @Override
     public void updateUser() {
-
         username.setText(User.getInstance().getUsername());
     }
 }
